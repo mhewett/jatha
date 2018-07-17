@@ -1,4 +1,4 @@
-# jatha LISP Library in Java
+# jatha: a LISP Library in Java
 
 ## Overview
 Jatha is a Java library that implements a large subset 
