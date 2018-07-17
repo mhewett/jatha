@@ -27,6 +27,6 @@ Copy it to your desired location.
 ## Run
 java -jar build/lib/jatha.jar
 
-This version has been compiled with Java 1.8
+This version will run in JDK 1.4 through JDK 1.8
 
 Micheal Hewett
