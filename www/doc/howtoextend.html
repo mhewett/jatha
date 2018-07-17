@@ -1,0 +1,53 @@
+<html>
+<head>
+  <title>How to extend Jatha</title>
+</head>
+
+<h2>How to extend Jatha by adding new functions</h2>
+
+<h3>The easy way</h3>
+If you can figure out how to implement it in LISP, do that
+rather than implement it in Java.  It's simpler.
+Put the definition in a file and load it.
+
+
+<h3>Extending the Java code</h3>
+
+Since the new function is a LISP function,
+       you need to define it as a method on the LispValue interface
+       (<code>org.jatha.dynatype.LispValue</code>) and then implement it on
+       one or more of the implementations of <code>LispValue</code>, such as
+       <code>StandardLispSymbol</code> or <code>StandardLispNumber</code>.
+       Put a default method on <code>StandardLispValue</code> that returns a default
+       value or throws an appropriate exception if the argument type(s) are not correct
+       at runtime.
+
+<h3>Extending the LISP interpreter</h3>
+If you just want to call the function from Java, the instructions above
+are sufficient.  However, if you want to make the function available
+through the LISP interpreter, you also need to do the following:
+
+<ul>
+ <li>The LISP compiler (<code>org.jatha.compile.LispCompiler.java</code>)
+     compiles the code into virtual machine code.  The virtual machine is
+     based on the one in Kogge's book <i>Symbolic Architectures</i>.</li>
+
+ <li>Each compilable function must a subclass of <code>LispPrimitive</code>.  See the
+       directory <code>org.jatha.compile</code> for many examples.</li>
+
+ <li>The function has to have a <code>compileArgs</code> method and an
+       <code>execute</code> method.  For example, look at <code>GethashPrimitive.java</code>.
+       The <code>execute</code> method must push a result on the <i>S</i> register and
+       pop the <i>C</i> (code) register an appropriate number of times.</li>
+
+ <li>The easiest thing to do is to copy the Primitive class for a function similar
+     to the one you are adding and modify it to call your new function.  This is
+     very easy.</li>
+
+ <li>To make the new primitive available to the user via the interpreter, you have
+       to register it.  Add a call to Register in <code>org.jatha.compile.LispCompiler.init()</code>.
+
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+
+<project name="Jatha" default="compile" basedir=".">
+  <description>This build file builds Jatha</description>
+
+  <!-- global properties -->
+  <property environment="env" />
+
+  <dirname file="${ant.file}" property="base"/>
+
+  <!-- == Compile Control Flags -->
+  <property name="build.debug" value="on" />
+  <property name="build.optimize" value="on" />
+  <property name="build.deprecation" value="on" />
+  <property name="test.outputToFile" value="false" />
+
+
+
+  <!-- =========== Global Names ============ -->
+  <property name="code.name" value="Jatha" />
+  <property name="code.organization" value="Hewett Research" />
+  <property name="code.jarfile" value="jatha.jar" />
+  <property name="code.vendor" value="http://www.sourceforge.net/projects/jatha/" />
+
+  <!-- ====== Input Directories ====== -->
+  <property name="dir.bin"  value="${base}/bin" />
+  <property name="dir.conf" value="${base}/misc/properties" />
+  <property name="dir.deploy" value="${base}" />
+  <property name="dir.lib"  value="${base}/lib" />
+  <property name="dir.src"  value="${base}/src" />
+
+  <!-- ====== Output Directories ===== -->
+  <property name="dir.www" value="${base}/www" />
+
+  <property name="dir.www.download" value="${dir.www}/download" />
+  <property name="dir.www.download.current" value="${dir.www.download}/current" />
+  <property name="dir.www.repository" value="${dir.www}/repository" />
+
+  <property name="dir.build" value="${base}/build" />
+  <property name="dir.build.classes" value="${dir.build}/classes" />
+  <property name="dir.build.lib" value="${dir.build}/lib" />
+  <property name="dir.javadocs" value="${base}/www/doc/api" />
+
+
+
+  <!-- =========== Boot Classpath =============== -->
+
+
+  <!-- ====== Classpath ====== -->
+  <property name="jars.test" value="${dir.lib}/junit.jar" />
+
+
+  <!-- initialize all variables -->
+  <target name="propsInit" unless="done.propsInit">
+    <!-- check environment variables -->
+    <property name="done.propsInit" value="true" />
+  </target>
+
+
+  <!-- initialize all taskdefs -->
+  <target name="taskInit" depends="propsInit"
+          unless="done.taskInit">
+    <property name="done.taskInit" value="true" />
+  </target>
+
+
+  <!-- sets up everything in preparation for deployment -->
+  <target name="deploy" depends="jar"
+          description="Deploy jar file">
+    <copy overwrite="yes" file="${dir.build.lib}/${code.jarfile}" tofile="${dir.www.repository}/${code.jarfile}"/>
+    <!-- copy overwrite="yes" file="${dir.build.lib}/${code.jarfile}" tofile="${dir.deploy}/${code.jarfile}"/ -->
+  </target>
+
+  <!-- compiles everything -->
+  <target name="compile" depends="taskInit"
+          description="Compile">
+  	<ant dir="src" target="compile"/>
+  </target>
+
+
+
+  <!-- creates a jarfile containing the compiled classes -->
+  <target name="jar" depends="compile"
+          description="Create .jar of classes">
+        <mkdir dir="${dir.build.lib}"/>
+	      <tstamp />
+        <jar jarfile="${dir.build.lib}/${code.jarfile}"
+            basedir="${dir.build.classes}">
+          <exclude name=".dependency-info/"/>
+          <exclude name="build.xml"/>
+          <manifest>
+              <attribute name="Main-Class"           value="org.jatha.Jatha" />
+              <attribute name="Specification-Vendor" value="Hewett Research" />
+            </manifest>
+        </jar>
+  </target>
+
+
+
+  <!-- clean up useless files -->
+  <target name="clean"
+          description="Clean up ">
+    <delete>
+      <fileset dir="${base}" defaultexcludes="false">
+        <include name="**/*~" />
+        <include name="**/.#*" />
+      </fileset>
+    </delete>
+  </target>
+
+
+  <!-- clobbers everything created in setup -->
+  <target name="clobber" depends="propsInit"
+          description="Clobbers everything created in setup">
+
+    <delete dir="${dir.javadocs}" />
+    <delete dir="${dir.build.classes}" />
+
+  </target>
+
+</project>

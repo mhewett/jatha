@@ -1,0 +1,330 @@
+
+ 
+Jatha 2.9.0 (released ?? ?? 2009)
+  (tm) Added new function EXPT.
+  (tm) Improved support for parsing large quoted lists.
+  (mh) Simplified internal representation of lambda lists (from Kensuke Matsuzaki)
+  (mh) Some code changes to convert List types to List<> with Generics for Java 1.5.
+  (mh) Fixed grindef, which was not working for a long time.
+  (mh) Fixed minor problem in parsing a list from a string to correctly handle uninterned symbols.
+  (mh) Changed SECDRegister to indirect through a LispSymbol to get around problems with pop().
+  (mh) Fixed problem in compiling dotimes, where GO tags were being duplicated during compilation, resulting in extra code generated (from Ola Bini).
+  (tm) Added a preliminary implementation of LispArray (from Tim McComb).
+  (sk) Fixed a problem with parsing integers with a leading "+" (from Sergey Kolos).
+  (ob) New SETF macro (from Ola Bini).
+   
+
+Jatha 2.8.0 (released 25 Apr 2007)
+  (mh) Compiled with Java 1.5.
+  (mh) Modified Jatha.makeList(...) to accept a variable number of arguments.
+  (mh) Added READ-FROM-STRING
+  (mh) Some code mods to remove compiler warnings in Java 1.5.
+       
+Jatha 2.7.1 (released 23 Feb 2006)
+  (mh) Added Jatha.eval(String) to make it easier to evaluate expressions from Java.
+  (mh) Added better documentation on Jatha.eval() and in the FAQ on using eval.
+  (mh) Compiled with Java 1.4.2 compiler.  The previous version was accidentally
+       compiled with java 1.5.0.  (Although nobody complained.) 
+
+Jatha 2.7.0 (released 30 Jan 2006)
+  (mh) Made *PACKAGE* variable special (suggested by Ola Bini).
+  (mh) HashTable type now returns TRUE for atom() and FALSE for listp().
+       (Suggested by Stephen Starkey).
+  (mh) Modified SETQ so that it will set a local variable value
+       if it is used inside a LET.  Previously it always set the
+       global value of a variable.  A similar fix needs to be
+       made for SET, but I don't know how to do it yet.
+  (mh) Modified the GUI to make the INPUT window be multi-line.
+       Suggested by Bob Futrelle.  Also added a lot of other window
+       functionality.
+  (mh) Fixed handling of #'(lambda ...) in the parser.  Now works.
+  (mh) Modified LispParser to support block comments, #| ... |#.
+  (mh) Lisp Listener window now allows multiple input statements.
+  (mh) Lisp Listener window again highlights matching parentheses.
+  (mh) Implemented a simple form of *LOAD-VERBOSE*.  You have to
+       set it at the top level.  Doesn't work inside LET statements.
+       Example that works:
+          (setq *load-verbose* t)
+          (load-from-jar "init/03.lisp")
+          (setq *load-verbose* nil)
+
+Jatha 2.5.0 (released 16 May 2005)
+  Summary of new functions:
+       (load-from-jar filename &OPTIONAL jar-file)
+       defmacro
+       (documentation type symbol)
+       (setf-documentation type symbol)
+       make-package, package-name, package-nicknames
+       package-use-list, use-package,
+       many cad..da..r functions
+       prog1, prog2
+       endp
+       cond
+       gensym
+
+  (mh) Updated all copyright dates to 2005.
+  (mh) Fixed method StandardLispValue.compareTo().  Argument wasn't
+       correctly being converted to a String before the comparison.
+       Thanks to Stephen Starkey for this fix.
+  (mh) Added Jatha.load(Reader) method.  Thanks to Stephen Starkey
+       for this contribution.
+  (mh) Added a basic implementation of macros thanks to some
+       amazing code mods by Jean-Pierre Gaillardon.
+  (mh) Changed the base type of the internal SymbolTable from
+       HashMap to TreeMap.  Now do-package-symbols and apropos
+       will print the symbols in alphabetical order.  Since normal
+       symbol table access mostly uses get, which is not affected
+       by the sorting, I hope speed is not affected too badly.
+  (mh) Modified LispCompiler.Register to optionally accept a package
+       name in which to register the builtin function.  This allows
+       us to create functions in the SYSTEM package.
+  (mh) Modified StandardLispSymbol.apropos_print to print [macro],
+       [special form] and [type] as appropriate when printing apropos results.
+  (mh) The root of the Jatha jar file now contains a directory named "init".
+       Files in it will be loaded at startup by Jatha if they are named
+       "01.lisp", "02.lisp", etc.  They will be loaded in alphabetical order.
+       The filenames should have one leading zero if the index number is less
+       than 10.  File names start with "01".  If there is a gap in the numbering,
+       Jatha will stop loading files.
+  (mh) Modified the Lisp Listener window to descend from JFrame instead of Frame.
+       Set EXIT_ON_CLOSE so that Jatha exits if the window is closed.
+  (mh) Added LOAD-FROM-JAR to load a file from either Jatha's jar file or
+       from an external jar file.  Do not use a leading "/" on the name of
+       the file to be loaded.  Examples: (load-from-jar "sample.lisp"),
+       (load-from-jar "foo/bar/example.lisp" "mylibrary.jar").
+  (mh) Added documentation page to document non-standard LISP functions
+       such as the new load-from-jar.
+  (mh) In the Listener (GUI frame), changed the Input box from the homebrew
+       text editing field to a JComboBox so that it has a history mechanism.
+       Unfortunately we lose dynamic parenthesis matching until I find a
+       ComboBoxEditor that implements that feature.
+  (ob) Add support for documentation inside primitives, packages, functions
+       and macros, through the documentation and setf-documentation forms.
+  (ob) Added a basis for package handling from Lisp, make-package, package-name
+       and others.
+  (ob) Added a few basic functions: prog2 and the c*r family of functions.
+  (ob) Added a beginning for standard lambda lists with keywords, optional arguments
+       and auxiliary arguments.
+  (mh) Started an implementation of Complex numbers.  LispComplex, StandardLispComplex.  Not done yet.
+
+Jatha 2.4.0 (limited released 02 January 2005)
+  (mh) Fixed concatenate so that it is not so picky about the
+       form of its first argument.  Also modified the error
+       message that is generated when the first argument is
+       not STRING to clarify the problem for the user.
+
+Jatha 2.3.0 (released 27 September 2004)
+  (mh) Modified concatenate so that the argument list matches
+       the Common LISP form, i.e.: (concatenate 'STRING "foo" "bar")
+       STRING is the only allowed type.  Arguments can be strings or atoms.
+  (mh) Added JUnit tests for concatenate.
+  (mh) Added Manifest files for src and doc jar files.  Somebody's jar
+       program complained when it tried to extract the doc jar that it
+       didn't have a manifest.
+
+Jatha 2.2.0 (released 26 September 2004)
+  (mh) Fixed the FUNCALL and APPLY functions so they work on user-defined functions.
+  (mh) Added the function (#') reader macro.
+  (mh) Registered the CONCATENATE and NCONC functions as LISP functions so they can
+       be called from LISP.  They had been inadvertently left out of previous versions.
+  (mh) Added comments to most of the SECDMachine operands.  The SECD machine is
+       the virtual machine used inside Jatha to execute LISP code.
+
+Jatha 2.1.0 (released 10 August 2004)
+  (mh) Added javadoc comments to all methods on LispValue.
+       This is the complete set of functions available to
+       the LISP programmer.
+  (mh) Implemented the following string functions:
+       string                string-upcase
+       string-downcase       string-capitalize
+       nstring-upcase        nstring-downcase
+       nstring-capitalize    string-equal
+       string=               string/=
+       string<               string-lessp
+       string>               string-greaterp
+       string<=              string>=
+       string-not-lessp      string-not-greaterp
+       string-ends-with      string-starts-with
+       string-trim           string-left-trim
+       string-right-trim
+  (mh) Implemented the position(elt) function for Lists and Strings.
+  (mh) Implemented constantp().
+  (mh) Implemented basic_elt(int) and removed elt(int).
+  (mh) Made several primitive LISP classes public that were
+       inadvertently not declared public.  No change in
+       functionality or behavior.
+
+Jatha 2.0.0 (released 16 July 2004)
+  (mh) Implemented the "last" function for Strings.  It returns
+       the last character in the string.  Throws an exception if
+       the string is empty.
+  (mh) Implemented 'neql', which is shorthand for (not (eql ...)).
+       This is not part of Common LISP.
+  (mh) Fixed bug in multiply, where multiplying by zero would throw
+       an exception.  Added JUnit test to catch this if it recurs.
+  (mh) Fixed a multiply bug in LispBignum where it would inadvertently
+       convert bignums back to integers, losing precision.  Fixed
+       similar bugs in Bignum add and subtract routines.
+  (mh) Registered additional LISP functions in the compiler and
+       added Primitives for them so they will be available in
+       the interface as well as via Java method calls.  Functions
+       registered (that were already in Jatha) are:
+         ceiling, floor
+         sin, cos, tan, sec, csc, cot, asin, acos, atan, atan2
+         abs, sqrt
+         radians-to-degrees, degrees-to-radians
+         reciprocal
+         min, max, factorial
+  (mh) Fixed bug in asin, acos, atan and atan2 where the reciprocal
+       of the result was being returned.
+  (mh) Added public functions getCompiler(), getParser(), getEval()
+       and getSymbolTable() to the Jatha class.
+
+
+Jatha 1.9.0 (released 24 June 2004)
+  (mh) Fixed two bugs in numeric divide, where real numbers were
+       inadvertently being turned into integers during calculations.
+       Other numeric routines were correct.
+  (mh) Extended JUnit tests for numeric computations to detect errors
+       like that described above.
+
+Jatha 1.8.0 (released 7 June 2004)
+  (mh) Added toStringShort() to LispValue.  Useful for printing arrays.
+       Defaults to calling toString();
+  (mh) Added reciprocal (1/x) math function.
+  (mh) Set *MAX-LIST-LENGTH* to 50,000.
+  (mh) Modified toStringAsCdr_internal to use a loop rather than
+       recursion.  This prevents a stack overflow when printing long lists.
+
+Jatha 1.7.0 (not released)
+
+Jatha 1.6.0 (released 13 Feb 2004)
+  (mh) Removed trace output inadvertently left in StandardLispNumber.
+  (mh) Added abs (absolute value) function.
+  (mh) Converted all Math.foo calls to StrictMath.foo.
+  (mh) Added more trig functions: sec, csc, cot, asin, acos, atan, atan2
+  (mh) Added radianstoDegrees and degreesToRadians.
+  (mh) Minor updates to the FAQ and documentation pages.
+  
+Jatha 1.5.6 (released 5 Feb 2004)
+  (mh) Added constructors with no arguments to each of the
+       datatypes in the org.jatha.dynatype package.  This
+       enables them to be constructed from their class names.
+  (mh) Modified StandardLispNumber.add so that it the second
+       input parameter can be either a list of numbers or a
+       single number.
+  (mh) Added the sqrt function.
+  (mh) Added sin, cos, tan functions.
+  (mh) Added floor and ceiling functions.
+  (mh) Fixed bug in add, subtract, multiply and divide functions.
+       Sometimes floating point numbers were being treated as integers.
+
+Jatha 1.5.5 (released 12 Dec 2003)
+  (mh) Changed LispValue into an interface and renamed the implementation
+       as StandardLispValue.  This requires no changes to code.
+  (mh) Created interfaces for all of the Lisp datatypes.
+       Implementation classes are now prefaced with "Standard".
+       For example, if you previously called "new LispSymbol", use
+       "new StandardLispSymbol" now.  All of the previous datatype
+       classes, LispValue, LispInteger, LispString, etc. are now
+       interfaces.
+
+Jatha 1.5.4 (released 30 Oct 2003)
+  (mh) Removed all remaining calls to LispValueFactory methods and
+       replaced them with calls to equivalent Jatha methods.
+
+Jatha 1.5.3 (released 07 Oct 2003)
+  (mh) Added a contains(Object) method to LispValue and
+       implemented it on LispCons.
+  (mh) Added a toCollection() method on LispValue with
+       specialized implementations on LispCons and LispHashTable.
+
+Jatha 1.5.2 (released 03 Oct 2003)
+  (mh) Caught situation in LispCons where it would accept
+       null as the CAR or CDR of the Cons cell.  Modified
+       it to change the value to NIL.
+  (mh) Major restructuring to eliminate static variables
+       that are dynamically allocated.  This enables two
+       LISPs to coexist in the same Java memory space.
+       Basic fix is to make sure that each dynamic type
+       knows what implementation of LISP created it.
+       This adds some memory overhead.
+  (mh) Use of LispValueFactory is deprecated.  Instead of
+       LispValueFactory.makeString, call the makeString method
+       on your instance of Jatha.
+
+Jatha 1.5.1 (released 29 Sep 2003)
+  (mh) Caught LispUndefinedFunctionException in Eval so that it
+       returns an error string and prints to System.err rather
+       than printing a stack dump.
+  (mh) Fixed error in LispInput.eraseLastCharTyped where it would
+       attempt to delete past the beginning of the line.
+  (mh) In java 1.4, TextField no longer displays Emacs editing
+       command characters such as CTRL-a.  Removed code that was
+       deleting the last character typed for these characters.
+  (mh) Changed output font to Courier in the LISP listener.  This
+       makes the output of the (apropos ...) function line up.
+  (mh) Changed apropos so that it returns a String rather than
+       printing to System.err.
+
+Jatha 1.5.0 (released 13 Sep 2003)
+  (mh) Recompiled under Java 1.4.1 on Mac OS X.
+       Previous versions were compiled with Java 1.3.
+
+Jatha 1.4.2 (released 21 Jul 2003)
+  (mh) Fixed LispNumber.eql to return NIL if the argument is not a LispNumber.
+       Previously it forwarded to equalNumeric, which threw an exception.
+
+Jatha 1.4.1 (released 16 Jul 2003)
+  (mh) Added equal() method for Integer, Real and Bignum.
+       It calls eql().
+
+Jatha v1.4.0 (released 14 Jun 2003)
+  (mh) Miscellaneous changes for the first public release.
+
+Jatha v1.3.8  (released 10 Jun 2003)
+  10 Jun 2003 (mh)  Fixed argument swap error when calling Jatha
+                    with the -nodisplay option.
+  10 Jun 2003 (mh)  Moved some embedded classes to separate files.
+  10 Jun 2003 (mh)  Fixed error handling in top-level read-eval-print loop.
+
+Jatha v1.3.7  (released 08 Jun 2003)
+  08 Jun 2003 (mh)  Fixed typo in error message in LispValueNotANumberException
+                    generated by LispNumber arithmetic operations.
+
+Jatha v1.3.6  (released 14 May 2003)
+  14 May 2003 (mh)  Changed *MAX-LIST-LENGTH* from 100 to 10000.
+
+Jatha v1.3.5  (released 21 April 2003)
+  21 Apr 2003 (mh)  Added *MAX-LIST-LENGTH* in order to interrupt processing of circular lists.
+
+Jatha v1.3.4  (released 2 April 2003)
+  02 Apr 2003 (mh)  Added methods so that eql comparison of LispIntegers and LispFloats works.
+                    Added equals, eql and equal methods on LispString.
+
+Jatha v1.3.3  (released 4 March 2003)
+  - Added new methods for calling LispParser.
+    It is now recommended that people do not instantiate LispParser.
+    Instead, call Jatha.PARSER.
+
+Jatha v1.3.2  (released 10 February 2003)
+  - LispValue.toJava method now accepts an optional
+    string that gives advice on which class to convert to.
+
+Jatha v1.3.1  (released 3 February 2003)
+  31 Jan 2003 (mh)  Updated version numbers in preparation for release.
+  16 Jan 2003 (mh)  Added BOOLEAN_TYPE.  Nothing is of this type, but for completeness.
+  14 Jan 2003 (mh)  Implemented rest() function.
+  13 Jan 2003 (mh)  Added LispValue.copy() to do deep-copying of lists.
+
+  09 Jan 2003 (mh)  Removed or-bars when printing a mixed-case symbol.
+                    Temporary until I get *read-case* and *print-case* correct.
+                    Added LispParser.setCaseSentivity() and getCaseSensitivity().
+                    Now you can parse something while controlling the case
+                    conversion on input.
+
+  31 Dec 2002 (mh)  Added toJava() method for every data type.  This returns
+                         a Character, Integer, Double, String or HashMap for anything.
+
+Jatha v1.3.0beta   31 December 2002
+

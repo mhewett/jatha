@@ -1,0 +1,4 @@
+Ant-Version: Apache Ant 1.5.4 
+Created-By: 1.4.2_05-141 ("Apple Computer, Inc.")
+Main-Class: org.jatha.Jatha
+Specification-Vendor: Hewett Research

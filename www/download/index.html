@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>Download Jatha Common LISP Library</title>
+</head>
+<body bgcolor="white">
+
+<h1 align="center">Download the Jatha Common LISP Library</h1>
+
+<ul>
+ <li><b>Current release: </b>2.8</li>
+ <li><b>Release date: </b>25 April 2007</li>
+ <li><b>Web site: </b><a href="http://www.sourceforge.net/projects/jatha/">http://www.sourceforge.net/projects/jatha/</a></li>
+</ul>
+
+<p>
+Please report any bugs to   m h e w e t t AT users.sourceforge.net
+</p>
+
+<hr>
+<h2 align="center">License</h2>
+<p>
+Jatha is a copyrighted work whose distribution is governed by the
+<a href="http://www.opensource.org/licenses/lgpl-license.php">LGPL</a>,
+which provides for free access to source code and allows Jatha to be used as a
+library in a commercial system.  However, if you make modifications to Jatha,
+any modified version of the library must also be made available under the
+<a href="http://www.opensource.org/licenses/lgpl-license.php">LGPL</a>.
+
+
+<h2>Requirements</h2>
+<ul>
+ <li><a href="http://java.sun.com/downloads/">Java 1.4.2 or higher</a>.
+ <li>If you want to run the <a href="http://www.junit.org/">JUnit</a> tests embedded in the <code>jatha.jar</code> file,
+     you must have the <a href="http://www.junit.org/"><code>junit.jar</code></a> library.</li>
+</ul>
+
+<h2>Installation instructions</h2>
+<ol>
+ <li><a href="http://www.sourceforge.net/projects/jatha/">Download <b>jatha-<i>version</i>.jar</b></a>.</li>
+ <li>Option 1: Run it in its own GUI window.
+   <ul>
+     <li><code>java -jar jatha-<i>version</i>.jar</code></li>
+     <li>The window that opens has a non-standard Listener.  Type expressions
+         in the top entry area and they will appear in the lower area.
+         Enter something simple, like: <code>(* 2 25)</code>.
+   </ul></li>
+
+ <li>Option 2: Run it on the console.
+   <ul>
+     <li><code>java -classpath jatha-<i>version</i>.jar org.jatha.Jatha -nodisplay</code></li>
+     <li>Using this option, enter your LISP forms on the command line.</li>
+   </ul></li>
+
+ <li>Option 3: Use it as a library.
+   <ul>
+     <li>Include <code>jatha-<i>version</i>.jar</code> on your classpath.</li>
+     <li>See <a href="../doc/faq.html">the Jatha documentation</a>
+         for a description of how to instantiate and use Jatha within
+         your program.</li>
+   </ul></li>
+
+</ol>
+
+<h2>Recent changes</h2>
+<pre>
+Jatha 2.8.0 (released 25 Apr 2007)
+  (mh) Compiled with Java 1.5.
+  (mh) Modified Jatha.makeList(...) to accept a variable number of arguments.
+  (mh) Added READ-FROM-STRING
+  (mh) Some code mods to remove compiler warnings in Java 1.5.
+       
+Jatha 2.7.1 (released 23 Feb 2006)
+  (mh) Added Jatha.eval(String) to make it easier to evaluate expressions from Java.
+  (mh) Added better documentation on Jatha.eval() and in the FAQ on using eval.
+  (mh) Compiled with Java 1.4.2 compiler.  The previous version was accidentally
+       compiled with java 1.5.0.  (Although nobody complained.)
+
+Jatha 2.7.0 (released 30 Jan 2006)
+  (mh) Made *PACKAGE* variable special (suggested by Ola Bini).
+  (mh) HashTable type now returns TRUE for atom() and FALSE for listp().
+       (Suggested by Stephen Starkey).
+  (mh) Modified SETQ so that it will set a local variable value
+       if it is used inside a LET.  Previously it always set the
+       global value of a variable.  A similar fix needs to be
+       made for SET, but I don't know how to do it yet.
+  (mh) Modified the GUI to make the INPUT window be multi-line.
+       Suggested by Bob Futrelle.  Also added a lot of other window
+       functionality.
+  (mh) Fixed handling of #'(lambda ...) in the parser.  Now works.
+  (mh) Modified LispParser to support block comments, #| ... |#.
+  (mh) Lisp Listener window now allows multiple input statements.
+  (mh) Lisp Listener window again highlights matching parentheses.
+  (mh) Implemented a simple form of *LOAD-VERBOSE*.  You have to
+       set it at the top level.  Doesn't work inside LET statements.
+       Example that works:
+          (setq *load-verbose* t)
+          (load-from-jar "init/03.lisp")
+          (setq *load-verbose* nil)
+
+Jatha 2.5.0 (released 16 May 2005)
+  Summary of new functions:
+       (load-from-jar filename &OPTIONAL jar-file)
+       defmacro
+       (documentation type symbol)
+       (setf-documentation type symbol)
+       make-package, package-name, package-nicknames
+       package-use-list, use-package,
+       many cad..da..r functions
+       prog1, prog2
+       endp
+       cond
+       gensym
+
+  (mh) Updated all copyright dates to 2005.
+  (mh) Fixed method StandardLispValue.compareTo().  Argument wasn't
+       correctly being converted to a String before the comparison.
+       Thanks to Stephen Starkey for this fix.
+  (mh) Added Jatha.load(Reader) method.  Thanks to Stephen Starkey
+       for this contribution.
+  (mh) Added a basic implementation of macros thanks to some
+       amazing code mods by Jean-Pierre Gaillardon.
+  (mh) Changed the base type of the internal SymbolTable from
+       HashMap to TreeMap.  Now do-package-symbols and apropos
+       will print the symbols in alphabetical order.  Since normal
+       symbol table access mostly uses get, which is not affected
+       by the sorting, I hope speed is not affected too badly.
+  (mh) Modified LispCompiler.Register to optionally accept a package
+       name in which to register the builtin function.  This allows
+       us to create functions in the SYSTEM package.
+  (mh) Modified StandardLispSymbol.apropos_print to print [macro],
+       [special form] and [type] as appropriate when printing apropos results.
+  (mh) The root of the Jatha jar file now contains a directory named "init".
+       Files in it will be loaded at startup by Jatha if they are named
+       "01.lisp", "02.lisp", etc.  They will be loaded in alphabetical order.
+       The filenames should have one leading zero if the index number is less
+       than 10.  File names start with "01".  If there is a gap in the numbering,
+       Jatha will stop loading files.
+  (mh) Modified the Lisp Listener window to descend from JFrame instead of Frame.
+       Set EXIT_ON_CLOSE so that Jatha exits if the window is closed.
+  (mh) Added LOAD-FROM-JAR to load a file from either Jatha's jar file or
+       from an external jar file.  Do not use a leading "/" on the name of
+       the file to be loaded.  Examples: (load-from-jar "sample.lisp"),
+       (load-from-jar "foo/bar/example.lisp" "mylibrary.jar").
+  (mh) Added documentation page to document non-standard LISP functions
+       such as the new load-from-jar.
+  (mh) In the Listener (GUI frame), changed the Input box from the homebrew
+       text editing field to a JComboBox so that it has a history mechanism.
+       Unfortunately we lose dynamic parenthesis matching until I find a
+       ComboBoxEditor that implements that feature.
+  (ob) Add support for documentation inside primitives, packages, functions
+       and macros, through the documentation and setf-documentation forms.
+  (ob) Added a basis for package handling from Lisp, make-package, package-name
+       and others.
+  (ob) Added a few basic functions: prog2 and the c*r family of functions.
+  (ob) Added a beginning for standard lambda lists with keywords, optional arguments
+       and auxiliary arguments.
+  (mh) Started an implementation of Complex numbers.  LispComplex, StandardLispComplex.  Not done yet.
+
+</pre>
+
+<h2>Known problems with this release</h2>
+<ul>
+ <li>Due to limitations of Java, LispSymbol.pop() and LispSymbol.push() don't work as expected.
+     See the <a href="../doc/api/org/jatha/dynatype/LispSymbol.html#pop()">
+     documentation for pop</a>.</li>
+ <li>When in console mode (<code>-nodisplay</code>), the delete key doesn't work on some
+     terminals.  Use <code>ctrl-h</code> to backspace.
+</ul>
+
+<hr>
+<address>
+<b>Author: </b><a href="http://www.hewettresearch.com/"><i>Micheal Hewett</i></a><br>
+</address>
+</body>
+</html>

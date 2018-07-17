@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Jatha Documentation - nonstandard functions</title>
+</head>
+<body>
+
+<h1 align="center">Jatha: Documentation for non-standard functions</h1>
+
+<div style="background-color:#CCCCCC;">
+
+<h2><code>LOAD-FROM-JAR (filename &OPTIONAL <i>jarfile</i>)</code></h2>
+LOAD-FROM-JAR will load a LISP file from either the jarfile (or classpath)
+containing Jatha, or from a specified jar file.
+
+<h3>Examples</h3>
+<pre>
+  (load-from-jar "myfunctions.lisp")     ;; uses getResource() on the current classpath
+  (load-from-jar "foo/myfunctions.lisp" "mylisplibrary.jar")  ;; Uses JarFile to read the jar.
+</pre>
+
+<h3>Notes</h3>
+<ul>
+ <li>Files at the top level of a jar file do not have a leading slash.  Use "sample.lisp", not "/sample.lisp".</li>
+ <li>This should be extended someday to open a stream to read a jar file.</li>
+ <li>This should be extended to load objects like icons and images.</li>
+</ul>
+</div>
+
+
+
+<hr>
+<address>
+<b>Author: </b><a href="http://www.hewettresearch.com/"><i>Micheal Hewett</i></a><br>
+</address>
+</body>
+</html>

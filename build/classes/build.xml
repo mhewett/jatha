@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+
+<project name="Jatha Source" default="compile" basedir=".">
+  <description>This build file compiles the core Jatha source</description>
+
+  <!-- global properties -->
+  <property environment="env" />
+
+
+  <!-- initialize all variables -->
+  <target name="propsInit"
+          unless="done.propsInit">
+    <!-- check environment variables -->
+    <fail unless="env.JATHA_HOME"
+          message="JATHA_HOME is not defined in your environment" />
+    <!-- pull in other properties -->
+    <property file="${env.JATHA_HOME}/misc/properties/ant.properties" />
+    <property name="done.propsInit" value="true" />
+  </target>
+
+
+  <!-- initialize all local variables -->
+  <target name="localInit" depends="propsInit"
+          unless="done.localInit">
+    <property name="name" value="Jatha source" />
+    <property name="nickname" value="source" />
+    <property name="buildDir" location="${dir.build.classes}" />
+    <property name="srcDir" location="${dir.src}" />
+    <property name="docDir" location="${dir.javadocs}" />
+    <property name="done.localInit" value="true" />
+  </target>
+
+
+  <!-- compiles the source code -->
+  <target name="compile" depends="localInit"
+          description="Compile the source code">
+    <echo message="Compiling ${name}" />
+    <mkdir dir="${buildDir}" />
+    <!-- compile all classes -->
+    <javac srcdir="${srcDir}" destdir="${buildDir}"
+           bootclasspath="${app.bootclasspath}"
+           classpath="${app.classpath}"
+           debug="${build.debug}"
+           optimize="${build.optimize}"
+           deprecation="${build.deprecation}" />
+    <!-- <javac srcdir="${srcDir}" destdir="${buildDir}" /> -->
+    <!-- copy resources to same location as .class files -->
+    <copy todir="${buildDir}">
+      <fileset dir="${srcDir}">
+        <exclude name="**/build.xml"/>
+        <exclude name="**/package.html"/>
+        <exclude name="**/*.java"/>
+      </fileset>
+    </copy>
+  </target>
+
+
+  <!-- create JavaDocs -->
+  <target name="javadocs" depends="javadoc" />
+  <target name="javadoc" depends="compile"
+          description="Create JavaDocs">
+    <mkdir dir="${docDir}"/>
+    <javadoc destdir="${docDir}"
+	     bootclasspath="${app.bootclasspath}"
+	     classpath="${app.classpath}"
+	     use="true"
+	     version="true"
+	     author="true"
+             doctitle="${name}"
+             windowtitle="${name} API">
+      <packageset dir="${srcDir}">
+        <include name="**" />
+      </packageset>
+      <link href="http://java.sun.com/j2se/1.4/docs/api/" />
+      <link href="http://www.junit.org/junit/javadoc/3.8.1/" />
+    </javadoc>
+  </target>
+
+
+  <!-- cleans up build dir and JavaDocs -->
+  <target name="clobber" depends="localInit"
+          description="Clean up">
+    <delete dir="${buildDir}/org" />
+    <delete dir="${docDir}" />
+  </target>
+
+</project>

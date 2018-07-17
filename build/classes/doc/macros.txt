@@ -1,0 +1,238 @@
+Hi Ola,
+
+Thanks for sending the list.  I have added some annotations
+and groupings to your response below.  See if you agree.
+
+You can pick one to start on.  I think I would try a
+simple version of defpackage first.
+
+There is a file on the Jatha web site: doc/howtoextend.html
+that explains how to add new functionality.  It probably isn't
+detailed enough, but we can work together on the first couple
+of implementations and document the process better.
+
+If we define a built-in macro in terms of other macros or built-in
+functions, do you think we should load it at startup time from a 
+file?  Or should we build it into the system?  I am not sure what
+is best.  The startup file has the advantage that we can easily
+fix bugs in the macro definition, if necessary.  Also, users could
+more easily submit changes.  Execution would be a bit slower, but
+not too bad.  In that case we'll have to modify Jatha to load the
+file from its Jar file upon startup.
+
+
+Mike
+
+
+
+Category A:  Most important to do
+-------------------------------------
+  defpackage  - already implemented in Java.  Just need a LISP version.
+                Could do a simple version first - without the keyword 
+                arguments.
+
+  in-package  - We really need this.  But it affects the current package, so
+                we need to modify the reader to detect this if we are reading
+                a file.
+
+  do-all-symbols      - these should be fairly easy
+  do-external-symbols
+  do-symbols
+
+  dolist    - medium hard
+  dotimes
+  do
+  do*
+  incf
+  let*
+  loop
+  prog
+  prog*
+  prog2
+  psetf
+  psetq
+  pushnew
+  setf
+  trace
+  unless
+  when
+
+  with-open-file     - these are harder
+  with-open-stream
+  with-output-to-string
+
+Category B:  In progress already
+--------------------------------
+  cond
+  defmacro
+  prog1
+
+Category C: Would be great, but don't know how to do it
+-------------------------------------------------------
+  multiple-value-bind
+  multiple-value-list
+  multiple-value-setq
+  throw
+  catch
+  defclass, defmethod, defgeneric, ...
+
+Mike
+
+
+;; From Ola Bini, May 8, 2005
+
+defclass
+defgeneric
+defmacro      - done
+defmethod
+defpackage    - easy, already in Java
+defsetf
+defun         - done
+destructuring-bind
+formatter
+in-package    - important!
+let           - done
+let*          - would be nice
+setf          - would be nice
+
+It's possible that I've missed a few thats necessary for these macros
+to exist.
+
+This is a list of all macros according to hyperspec:
+and
+assert
+call-method
+case
+ccase
+check-type
+compiler-let
+cond          - implementing now
+ctypecase
+decf
+declaim
+defclass
+defconstant   - done
+defgeneric
+define-compiler-macro
+define-condition
+define-declaration
+define-method-combination
+define-modify-macro
+define-setf-method
+defmacro      - done
+defmethod
+defpackage
+defparameter
+defsetf
+defstruct
+deftype
+defun         - done
+defvar        - done
+destructuring-bind
+do            - would be nice
+do*           - would be nice
+do-all-symbols      - should be easy
+do-external-symbols - should be easy
+do-symbols          - should be easy
+dolist              - would be nice
+dotimes             - would be nice
+ecase
+encapsulated
+etypecase
+flet
+formatter
+gathering
+generic-function
+handler-bind
+handler-case
+ignore-errors
+in-package          - would be nice
+incf                - would be nice
+iterate   
+labels
+let                 - done
+let*                - would be nice
+locally
+loop                - would be nice
+loop-finish
+macrolet
+mapping
+multiple-value-bind  - would be great, but don't know how to do it.
+multiple-value-list  - would be great, but don't know how to do it.
+multiple-value-setq  - would be great, but don't know how to do it.
+next-in
+nth-value
+or                  - done
+pop                 - done
+pprint-exit-if-list-exhausted
+pprint-logical-block
+pprint-pop
+print-unreadable-object
+producing
+prog                - would be nice
+prog*               - would be nice
+prog1               - would be nice
+prog2               - would be nice
+psetf               - would be nice
+psetq               - would be nice
+push                - done
+pushnew             - would be nice
+remf
+restart-bind
+restart-case
+return             
+rotatef
+setf                - would be nice
+shiftf
+step
+terminate-producing
+time                - done
+trace               - would be nice
+typecase           
+unless              - would be nice
+untrace
+when                - would be nice
+with-accessors
+with-compilation-unit
+with-condition-restarts
+with-hash-table-iterator
+with-input-from-string
+with-open-file     - would be nice
+with-open-stream   - would be nice
+with-output-to-string  - would be nice
+with-package-iterator
+with-simple-restart
+with-slots
+with-standard-io-syntax
+
+And these are all special forms, according to hyperspec:
+block
+catch            - someday
+compiler-let
+declare
+eval-when
+flet
+function
+generic-flet
+generic-labels
+go
+if               - would be nice
+labels
+let              - done
+let*
+load-time-value
+locally
+macrolet
+multiple-value-call
+multiple-value-prog1
+progn            - done
+progv
+quite
+return-from
+setq             - done
+symbol-macrolet
+tagbody
+the
+throw            - someday
+unwind-protect
+with-added-methods

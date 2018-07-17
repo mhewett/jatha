@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Jatha - LISP Library in Java</title>
+</head>
+<body bgcolor="white">
+
+<table>
+ <tr>
+  <td><h1 align="center">Jatha - Common LISP library in Java</h1></td>
+ </tr>
+</table>
+
+Jatha is a Java library that implements a fairly large subset of Common LISP,
+including most of the datatypes (e.g. packages, bignums) and their associated
+methods.  The API allows programmatic access to LISP from Java,
+either using an eval() method or using Java methods, e.g.
+<pre>
+  LispValue firstElement = myList.car();
+</pre>
+Additional LISP primitives can be written in Java and registered at
+runtime to be used in the LISP interpreter.
+
+The LISP engine compiles the input forms to an abstract machine
+code specified in Kogge's book "The Architecture of Symbolic Machines".
+The engine is pretty fast on today's computers.  The following program
+can calculate 2^128 = 340282366920938463463374607431768211456
+in about 4 milliseconds:
+<pre>
+  (defun power (a n)
+     (if (zerop n)
+       1
+       (* a (power a (1- n)))))
+</pre>
+
+The Jatha library is covered by the Gnu Lesser General Public License, which
+allows libraries to be combined with non-free software.
+
+<hr>
+<h2>Quick Links</h2>
+<ul>
+<li><a href="download/">Download Jatha</a></li>
+<li><a href="screenshot/">Jatha screenshots</a></li>
+<li><a href="doc/">Jatha documentation</a></li>
+<li><a href="doc/short-description.html">Overview of Jatha</a></li>
+<li><a href="doc/faq.html">FAQ</a></li>
+<li><a href="doc/todo.html">Jatha To-Do list (get involved!)</a></li>
+</ul>
+
+<hr>
+<h2>Jatha Overview</h2>
+<ul>
+ <li>Contains a large subset of Common LISP.  Not a toy implementation.</li>
+ <li>Includes the <code>org.jatha.dynatype</code> package that implements
+     a hierarchy of dynamically-typed data types that follows the
+     Common LISP set of data types.</li>
+ <li>Has been used to convert <a href="http://algernon-j.sourceforge.net/">Algernon</a>,
+     a medium-sized LISP rule engine, to Java on a line-for-line basis.</li>
+ <li>Surprisingly fast.</li>
+ <li>Useful as an embedded library, or as a stand-alone application.</li>
+</ul>
+
+<hr>
+<h2>Jatha history</h2>
+Jatha evolved from a "Little LISP" I started implementing in 1991 in C++.
+The development of Java eliminated the need to implement a garbage collector,
+so I quickly converted all of the code to Java in 1996 and had a pretty
+complete system in 1997.
+<p>
+In 2002 I started using Jatha to convert the
+<a href="http://algernon-j.sourceforge.net/">Algernon rule engine</a>
+from LISP to Java.  This resulted in several extensions to the library and verification
+that the library was complete enough to distribute.
+The first open source version of Jatha was distributed on June 14, 2003.
+<p>
+Jatha development is now supported by <a href="http://www.hewettresearch.com/">Hewett Research</a>.
+<hr>
+<address>
+Hosted at: <A href="http://sourceforge.net"> <IMG src="http://sourceforge.net/sflogo.php?group_id=86233&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></A>
+</address>
+</body>
+</html>

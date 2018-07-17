@@ -1,0 +1,128 @@
+<html>
+<head>
+  <title>Jatha FAQ</title>
+</head>
+
+<h2>Jatha FAQ</h2>
+
+<h3>How do I run Jatha?</h3>
+<pre>
+  java -classpath jatha.jar org.jatha.Jatha
+
+     or, if you don't want to use the GUI:
+
+  java -classpath jatha.jar org.jatha.Jatha <b>-nodisplay</b>
+</pre>
+
+<hr>
+<h3>How do I use Jatha from within another Java program?</h3>
+<pre>
+    import org.jatha.Jatha;
+
+     ...
+
+    Jatha myLisp  = new Jatha(false, false);
+    myLisp.init();
+    myLisp.start();
+     ...
+    // Create a new symbol
+    LispValue  symbol1  = myLisp.parse("FOO", LispParser.PRESERVE); // preserve case
+     ...
+    // Evaluate a form:
+    try {
+      String input  = "(* 5 10)";
+      LispValue result = myLisp.eval(input);
+      System.out.println(input + " = " + result);
+    } catch (Exception e) {
+     System.err.println("LISP Exception: " + e);
+    }
+</pre>
+
+<hr>
+<h3>How do I use LISP expressions with variables from Java?</h3>
+Any of the following will work in v2.7.1 and higher.  All return the
+value <b>35</b>:
+<xmp>
+  1) System.out.println(lisp.eval("(let ((x 7)) (* 5 x)))"));  // uses a local variable
+
+  2) System.out.println(lisp.eval("(progn (setq x 7) (* 5 x))"));  // executes multiple statements
+
+  3) System.out.println(lisp.eval("(setq x 7)"));  // creates a global variable
+     System.out.println(lisp.eval("(* 5 x)"));     // uses a global variable
+</xmp>
+The <code>eval</code> method accepts an optional second parameter that is
+a list of global variables.  However, the global variable list is
+difficult to construct.  The examples here are easier to use.
+
+<hr>
+<h3>How do I use the dynatype package?</h3>
+<p>
+The <code>org.jatha.dynatype</code> package provides a rich set of
+dynamically-typed objects that parallel the Common LISP type system.
+</p>
+<p>
+The root class is an interface called <code>LispValue</code> that is
+implemented by StandardLispValue.
+All values in the system are instances of <code>LispValue</code>.
+Usually, you should declare variables of type
+<code>LispValue</code> rather than more specific types.
+</p>
+<pre>
+    import org.jatha.Jatha;
+    import org.jatha.dynatype.*;
+
+    Jatha lisp = new Jatha(false, false);
+    lisp.init();
+    lisp.start();
+
+    LispValue foo1 = lisp.makeInteger(7);
+    LispValue foo2 = lisp.makeSymbol("Hello");
+    LispValue foo3 = lisp.makeReal(3.14159);
+    LispValue foo4 = lisp.makeList(foo1, foo2, foo3);
+
+    LispValue foo5 = foo4.car();
+    LispValue foo6 = foo4.second();
+
+    System.out.println(foo1);   // and so on.
+</pre>
+
+Sometimes you will want to access the Java version of a value rather
+than the LISP version.  Usually this happens in boolean expressions.
+To access these values, use the <code>basic_</code> methods.
+Instead of:
+<pre>
+  if (foo1.numberp() == lisp.T)
+
+    or
+
+  if (foo4.length().greaterThan(lisp.makeInteger(5)) == lisp.T)
+<pre>
+It is easier to say:
+<pre>
+  if (foo1.basic_numberp())
+
+    and
+
+  if (foo1.basic_length() > 5)
+</pre>
+
+<p>
+All Sequence types have iterators, so you can iterate over a LispValue that
+is a list by doing standard Java iteration:
+</p>
+<pre>
+  Iterator listIterator = foo4.iterator();
+  while (listIterator.hasNext())
+  {
+    LispValue value = (LispValue)listIterator.next();
+
+    ...
+  }
+</pre>
+Of course you can also write a while loop that steps through
+the list using <code>car()</code> and <code>cdr()</code> if
+you like.
+
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+org.jatha
+org.jatha.compile
+org.jatha.display
+org.jatha.dynatype
+org.jatha.eval
+org.jatha.machine
+org.jatha.read
+org.jatha.test
+org.jatha.test.junit
+org.jatha.util
