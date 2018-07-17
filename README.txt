@@ -5,12 +5,12 @@ LISP from Java.  Jatha is useful as a fast, embedded
 LISP language, as a set of dynamically-typed data types,
 or as a standalone LISP.
 
-Jatha is governed by the Gnu LGPL license.  Please submit
-any modifications back to the sourceforge site.
+Jatha is governed by the Gnu LGPL 3.0 license.  Please submit
+any modifications, bugs, and pull requests to the GitHub site.
 
-See:  http://sourceforge.net/projects/jatha/
+See:  https://github.com/mhewett/jatha
 
-   Run       add jatha.jar to your classpath
+   Run       java -jar build/lib/jatha.jar
 
    Compile   Run 'ant' in the top-level Jatha directory.
              You will need to add the jar files from
@@ -21,12 +21,9 @@ See:  http://sourceforge.net/projects/jatha/
              to create jatha/build/lib/jatha.jar 
              Copy it to your desired location.
 
-The initial Sourceforge-released version is v1.5.0
-compiled with Java 1.4.1.  
+This version has been compiled with Java 1.8
 
 
 Micheal Hewett
 Hewett Research
 
-Contact me through the links on the Jatha project page at 
-SourceForge.
