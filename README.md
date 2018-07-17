@@ -1,6 +1,6 @@
-# jatha
+# jatha LISP Library in Java
 
-# Overview
+## Overview
 Jatha is a Java library that implements a large subset 
 of Common LISP, including most of the datatypes 
 (e.g. packages, bignums).  The API allows access to 
