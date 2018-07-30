@@ -11,10 +11,9 @@
   <target name="propsInit"
           unless="done.propsInit">
     <!-- check environment variables -->
-    <fail unless="env.JATHA_HOME"
-          message="JATHA_HOME is not defined in your environment" />
+  	<property name="JATHA_HOME" value="${basedir}/.." />
     <!-- pull in other properties -->
-    <property file="${env.JATHA_HOME}/misc/properties/ant.properties" />
+    <property file="${JATHA_HOME}/misc/properties/ant.properties" />
     <property name="done.propsInit" value="true" />
   </target>
 

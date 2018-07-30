@@ -96,7 +96,8 @@ public class StandardLispPackage extends StandardLispValue implements LispPackag
   /**
    * Creates a new package.  Caller should verify
    * that none exists by the same name before calling
-   * this function.Þ
+   * this function.
+   * 
    * @param name - a LISP string giving the name of the package
    *
    */
