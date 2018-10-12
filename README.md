@@ -29,4 +29,19 @@ java -jar build/lib/jatha.jar
 
 This version will run in JDK 1.4 through JDK 1.8
 
+## Example
+```lisp
+(defun factorial (n)
+    (if (> n 1)
+        (* n (factorial (1- n)))
+        ;; else
+        1)
+    )
+    
+(factorial 10)
+
+(factorial 100)
+```
+
+
 Micheal Hewett
